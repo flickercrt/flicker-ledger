@@ -1,0 +1,2356 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#7C3AED">
+  <meta name="color-scheme" content="dark">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="حسابات فليكر">
+  <meta name="description" content="دفتر حسابات شخصي — Flicker Creative Studio. Crazy and professional at the same time.">
+  <title>حسابات فليكر</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <style>
+    :root {
+      --bg: #10081C;
+      --bg-elev: #1A102C;
+      --bg-card: #221536;
+      --bg-card-2: #2A1B42;
+      --violet: #7C3AED;
+      --violet-2: #8B5CF6;
+      --violet-dim: rgba(124, 58, 237, 0.28);
+      --pink: #EC4899;
+      --pink-dim: rgba(236, 72, 153, 0.22);
+      --text: #F8F4FF;
+      --text-soft: #C9B8E0;
+      --text-mute: #8E7AA8;
+      --line: rgba(255, 255, 255, 0.08);
+      --green: #34D399;
+      --green-dim: rgba(52, 211, 153, 0.16);
+      --rose: #FB7185;
+      --rose-dim: rgba(251, 113, 133, 0.16);
+      --danger: #F87171;
+      --danger-dim: rgba(248, 113, 113, 0.16);
+      --radius: 16px;
+      --radius-sm: 12px;
+      --shadow: 0 10px 36px rgba(0, 0, 0, 0.38);
+      --safe-b: env(safe-area-inset-bottom, 0px);
+      --safe-t: env(safe-area-inset-top, 0px);
+      --font: system-ui, -apple-system, "Segoe UI", "Noto Sans Arabic", "Tahoma", "Geeza Pro", "Arial", sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; }
+    body {
+      font-family: var(--font);
+      background:
+        radial-gradient(900px 480px at 100% -8%, rgba(236, 72, 153, 0.16), transparent 52%),
+        radial-gradient(720px 420px at -10% 0%, rgba(124, 58, 237, 0.38), transparent 50%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      padding: calc(10px + var(--safe-t)) 16px calc(128px + var(--safe-b));
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: 16px;
+      color: inherit;
+    }
+    button {
+      border: 0;
+      background: none;
+      cursor: pointer;
+      color: inherit;
+    }
+    img { display: block; }
+    [hidden] { display: none !important; }
+
+    .app-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      position: relative;
+    }
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.35), var(--shadow);
+      flex-shrink: 0;
+    }
+    .brand { flex: 1; min-width: 0; }
+    .brand h1 {
+      font-size: 1.28rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+    .brand .tagline {
+      color: var(--text-mute);
+      font-size: 0.68rem;
+      margin-top: 2px;
+      line-height: 1.35;
+      direction: ltr;
+      text-align: right;
+      unicode-bidi: isolate;
+    }
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .icon-btn:active { transform: scale(0.96); background: var(--bg-card-2); }
+    .icon-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+    .menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      min-width: 230px;
+      background: var(--bg-elev);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      z-index: 30;
+      overflow: hidden;
+      padding: 6px;
+    }
+    .menu.open { display: block; }
+    .menu button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      text-align: right;
+      padding: 12px 12px;
+      border-radius: 10px;
+      min-height: 44px;
+      color: var(--text);
+    }
+    .menu button:active { background: var(--violet-dim); }
+    .menu .hint {
+      padding: 10px 12px 8px;
+      color: var(--text-mute);
+      font-size: 0.72rem;
+      line-height: 1.4;
+      border-top: 1px solid var(--line);
+      margin-top: 4px;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .sum-card {
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px 12px 10px;
+      min-height: 96px;
+    }
+    .sum-card.in { box-shadow: inset 3px 0 0 var(--green); }
+    .sum-card.out { box-shadow: inset 3px 0 0 var(--rose); }
+    .sum-card h2 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+    }
+    .sum-card.in h2 { color: var(--green); }
+    .sum-card.out h2 { color: var(--rose); }
+    .sum-rows { display: flex; flex-direction: column; gap: 2px; }
+    .sum-row {
+      font-size: 1.12rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+    .sum-empty { color: var(--text-mute); font-size: 0.95rem; font-weight: 600; }
+
+    .toolbar { margin-bottom: 14px; }
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 0 12px;
+      min-height: 48px;
+      margin-bottom: 10px;
+    }
+    .search svg { width: 18px; height: 18px; stroke: var(--text-mute); fill: none; stroke-width: 1.8; stroke-linecap: round; flex-shrink: 0; }
+    .search input {
+      flex: 1;
+      background: transparent;
+      border: 0;
+      outline: none;
+      min-width: 0;
+      height: 48px;
+      color: var(--text);
+    }
+    .search input::placeholder { color: var(--text-mute); }
+    .filters { display: flex; gap: 8px; }
+    .chip {
+      flex: 1;
+      min-height: 40px;
+      border-radius: 999px;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      color: var(--text-soft);
+      font-weight: 600;
+      font-size: 0.86rem;
+      padding: 8px 8px;
+    }
+    .chip.active {
+      background: var(--violet);
+      border-color: var(--violet);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
+    }
+
+    .person {
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .person-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      text-align: right;
+      padding: 12px;
+      min-height: 64px;
+    }
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--violet), var(--pink));
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 1rem;
+      flex-shrink: 0;
+      color: #fff;
+    }
+    .person-meta { flex: 1; min-width: 0; }
+    .person-name { font-weight: 800; font-size: 1.02rem; }
+    .person-balances { color: var(--text-soft); font-size: 0.8rem; margin-top: 2px; }
+    .person-balances .in { color: var(--green); }
+    .person-balances .out { color: var(--rose); }
+    .caret { color: var(--text-mute); transition: transform .2s; }
+    .person.open .caret { transform: rotate(180deg); }
+    .person-body { display: none; border-top: 1px solid var(--line); padding: 8px; }
+    .person.open .person-body { display: block; }
+
+    .entry {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      padding: 10px 10px 8px;
+      margin-bottom: 8px;
+    }
+    .entry:last-child { margin-bottom: 0; }
+    .entry.paid { opacity: 0.62; }
+    .entry-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+    .entry-note { font-weight: 700; font-size: 0.92rem; }
+    .entry-amt { font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .entry.paid .entry-amt { text-decoration: line-through; }
+    .entry-sub { color: var(--text-mute); font-size: 0.75rem; margin-top: 2px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      vertical-align: middle;
+    }
+    .badge.unpaid { background: var(--pink-dim); color: #F9A8D4; }
+    .badge.paid { background: var(--green-dim); color: var(--green); }
+    .badge.dir-in { background: var(--green-dim); color: var(--green); }
+    .badge.dir-out { background: var(--rose-dim); color: var(--rose); }
+    .entry-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .btn {
+      min-height: 40px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      border: 1px solid var(--line);
+      background: var(--bg-card-2);
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn.primary {
+      background: var(--violet);
+      border-color: var(--violet);
+      color: #fff;
+    }
+    .btn.pink {
+      background: var(--pink);
+      border-color: var(--pink);
+      color: #fff;
+    }
+    .btn.danger {
+      background: var(--danger-dim);
+      border-color: transparent;
+      color: var(--danger);
+    }
+    .btn.ghost { background: transparent; }
+    .btn:disabled { opacity: 0.45; cursor: default; }
+
+    .empty {
+      text-align: center;
+      color: var(--text-mute);
+      padding: 36px 16px;
+      background: var(--bg-card);
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+    }
+    .empty strong { display: block; color: var(--text-soft); margin-bottom: 4px; font-size: 1.02rem; }
+
+    .fab {
+      position: fixed;
+      left: max(16px, env(safe-area-inset-left, 0px));
+      bottom: calc(16px + var(--safe-b));
+      height: 56px;
+      padding: 0 18px 0 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--violet), var(--pink));
+      color: #fff;
+      font-weight: 800;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 10px 28px rgba(236, 72, 153, 0.38);
+      z-index: 20;
+    }
+    .fab:active { transform: scale(0.97); }
+    .fab svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(6, 2, 14, 0.62);
+      z-index: 40;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease;
+    }
+    .backdrop.open { opacity: 1; pointer-events: auto; }
+
+    .sheet {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      max-height: 92vh;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      background: var(--bg-elev);
+      border-radius: 22px 22px 0 0;
+      z-index: 50;
+      transform: translateY(110%);
+      transition: transform .28s ease;
+      padding: 8px 16px calc(18px + var(--safe-b));
+      box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.4);
+    }
+    .sheet.open { transform: translateY(0); }
+    .handle {
+      width: 42px;
+      height: 4px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.18);
+      margin: 6px auto 12px;
+    }
+    .sheet h3 {
+      font-size: 1.12rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+    .field { margin-bottom: 12px; }
+    .field label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+    }
+    .field input[type="text"],
+    .field input[type="number"],
+    .field input[type="date"],
+    .field textarea {
+      width: 100%;
+      min-height: 48px;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      outline: none;
+      color: var(--text);
+    }
+    .field textarea { min-height: 80px; resize: vertical; }
+    .field input:focus, .field textarea:focus {
+      border-color: var(--violet-2);
+      box-shadow: 0 0 0 3px var(--violet-dim);
+    }
+    .seg {
+      display: flex;
+      gap: 8px;
+    }
+    .seg button {
+      flex: 1;
+      min-height: 48px;
+      border-radius: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      font-weight: 700;
+      padding: 8px 6px;
+    }
+    .seg button.active.cur { background: var(--violet); border-color: var(--violet); color: #fff; }
+    .seg button.active.in { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+    .seg button.active.out { background: var(--rose-dim); border-color: var(--rose); color: var(--rose); }
+
+    .sheet-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .sheet-actions .btn { flex: 1; min-height: 48px; font-size: 0.95rem; }
+
+    .history { margin: 8px 0 14px; }
+    .history h4 { font-size: 0.82rem; color: var(--text-soft); margin-bottom: 8px; }
+    .hist-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.85rem;
+    }
+    .hist-item:last-child { border-bottom: 0; }
+    .remain-line {
+      background: var(--violet-dim);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(84px + var(--safe-b));
+      transform: translate(-50%, 16px);
+      background: var(--bg-elev);
+      border: 1px solid var(--line);
+      color: var(--text);
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      z-index: 80;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s, transform .2s;
+      box-shadow: var(--shadow);
+      max-width: 90vw;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    .install-tip {
+      display: none;
+      align-items: flex-start;
+      gap: 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--violet-dim);
+      border-radius: 14px;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+    .install-tip.show { display: flex; }
+    .install-tip button { color: var(--text-mute); min-width: 32px; min-height: 32px; font-size: 1.1rem; }
+
+
+    /* App lock */
+    body.locked {
+      padding: 0;
+      overflow: hidden;
+      max-width: none;
+      margin: 0;
+      height: 100%;
+    }
+    body.locked #appShell,
+    body.locked .fab,
+    body.locked .sheet,
+    body.locked .backdrop,
+    body.locked .toast {
+      display: none !important;
+    }
+    .lock-screen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background:
+        radial-gradient(900px 480px at 100% -8%, rgba(236, 72, 153, 0.16), transparent 52%),
+        radial-gradient(720px 420px at -10% 0%, rgba(124, 58, 237, 0.38), transparent 50%),
+        var(--bg);
+      padding: calc(16px + var(--safe-t)) 20px calc(16px + var(--safe-b));
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    body.locked .lock-screen,
+    .lock-screen.show { display: flex; flex-direction: column; align-items: center; }
+    .lock-inner {
+      width: 100%;
+      max-width: 360px;
+      margin: auto;
+      text-align: center;
+      padding: 8px 0 16px;
+    }
+    .lock-logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 20px;
+      margin: 0 auto 14px;
+      box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.35), var(--shadow);
+    }
+    .lock-inner h1 {
+      font-size: 1.28rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .lock-msg {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      font-weight: 600;
+      min-height: 1.5em;
+      margin-bottom: 16px;
+    }
+    .pin-dots {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      direction: ltr;
+      margin-bottom: 14px;
+      min-height: 16px;
+    }
+    .pin-dots span {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--violet-2);
+      background: transparent;
+      transition: background .12s, transform .12s;
+    }
+    .pin-dots span.filled {
+      background: var(--pink);
+      border-color: var(--pink);
+    }
+    .lock-error {
+      color: var(--danger);
+      font-size: 0.85rem;
+      font-weight: 700;
+      min-height: 1.3em;
+      margin-bottom: 8px;
+    }
+    .lock-wait {
+      color: #F9A8D4;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      max-width: 300px;
+      margin: 0 auto 16px;
+      direction: ltr;
+    }
+    .keypad button {
+      min-height: 64px;
+      border-radius: 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .keypad button:active { background: var(--violet-dim); transform: scale(0.96); }
+    .keypad button:disabled { opacity: 0.35; transform: none; }
+    .keypad button.key-action {
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+    .lock-inner.shake .pin-dots { animation: lockshake .4s ease; }
+    @keyframes lockshake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
+    }
+    .bio-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: var(--violet-dim);
+      border: 1px solid var(--violet);
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .bio-btn:active { transform: scale(0.97); }
+    .bio-btn[hidden] { display: none !important; }
+    .lock-link {
+      display: inline-block;
+      color: var(--text-soft);
+      font-size: 0.88rem;
+      font-weight: 700;
+      min-height: 40px;
+      padding: 8px 10px;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .reset-panel {
+      width: 100%;
+      max-width: 360px;
+      margin: auto;
+      text-align: right;
+      background: var(--bg-elev);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px 16px;
+    }
+    .reset-panel h2 { font-size: 1.08rem; font-weight: 800; margin-bottom: 10px; }
+    .reset-panel p { color: var(--text-soft); font-size: 0.88rem; margin-bottom: 12px; line-height: 1.55; }
+    .settings-note {
+      background: var(--violet-dim);
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 0.82rem;
+      color: var(--text-soft);
+      line-height: 1.55;
+      margin: 8px 0 14px;
+    }
+    .settings-row {
+      width: 100%;
+      text-align: right;
+      min-height: 48px;
+      padding: 12px 4px;
+      border-bottom: 1px solid var(--line);
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .settings-row .meta { font-weight: 600; font-size: 0.8rem; color: var(--text-mute); }
+
+    @media (min-width: 540px) {
+      body { max-width: 480px; margin: 0 auto; }
+    }
+  </style>
+</head>
+<body class="locked">
+  <div id="lockScreen" class="lock-screen" role="dialog" aria-modal="true" aria-labelledby="lockTitle">
+    <div class="lock-inner" id="lockInner">
+      <img class="lock-logo" src="icon-192.png" width="72" height="72" alt="">
+      <h1>حسابات فليكر</h1>
+      <p class="lock-msg" id="lockTitle">أدخل الرقم السري</p>
+      <div class="pin-dots" id="pinDots" aria-hidden="true"></div>
+      <p class="lock-error" id="lockError" role="alert"></p>
+      <p class="lock-wait" id="lockWait" hidden></p>
+      <div class="keypad" id="keypad" dir="ltr"></div>
+      <button type="button" class="bio-btn" id="bioBtn" hidden>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2"/><rect x="5" y="10" width="14" height="10" rx="2"/><circle cx="12" cy="15" r="1.5"/></svg>
+        فتح بالوجه أو البصمة
+      </button>
+      <div>
+        <button type="button" class="lock-link" id="forgotBtn">نسيت الرقم السري؟</button>
+        <button type="button" class="lock-link" id="lockCancelBtn" hidden>إلغاء</button>
+      </div>
+    </div>
+    <div class="reset-panel" id="resetPanel" hidden>
+      <h2>إعادة ضبط التطبيق؟</h2>
+      <p>إذا نسيت الرقم السري، الطريقة الوحيدة هي مسح التطبيق بالكامل: كل الحسابات، والدفعات، وإعدادات القفل. ما في طريقة نرجّع الرقم ولا البيانات إلا إذا عندك نسخة احتياطية مصدرة من قبل. صدّر نسخة وخلّيها بمكان آمن قبل ما يصير هالشي.</p>
+      <div class="field">
+        <label for="resetConfirm">اكتب كلمة «حذف» حتى نتأكد</label>
+        <input type="text" id="resetConfirm" maxlength="12" autocomplete="off">
+      </div>
+      <div class="sheet-actions">
+        <button type="button" class="btn ghost" id="resetCancel">إلغاء</button>
+        <button type="button" class="btn danger" id="resetYes">مسح كل شيء</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="appShell">
+  <header class="app-header">
+    <img class="logo" src="icon-192.png" width="48" height="48" alt="فليكر">
+    <div class="brand">
+      <h1>حسابات فليكر</h1>
+      <p class="tagline" dir="ltr">Crazy and professional at the same time.</p>
+    </div>
+    <button type="button" class="icon-btn" id="menuBtn" aria-label="المزيد" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.6" fill="currentColor" stroke="none"/></svg>
+    </button>
+    <div class="menu" id="menu" hidden>
+      <button type="button" id="settingsBtn">القفل والحماية</button>
+      <button type="button" id="exportBtn">تصدير نسخة احتياطية</button>
+      <button type="button" id="importBtn">استيراد نسخة احتياطية</button>
+      <p class="hint">Flicker Creative Studio<br>البيانات محفوظة على جهازك فقط.</p>
+    </div>
+  </header>
+
+  <div class="install-tip" id="installTip">
+    <div>تقدر تضيف التطبيق لشاشة هاتفك: من المتصفح اختر «إضافة إلى الشاشة الرئيسية» وبتفتحه زي أي تطبيق.</div>
+    <button type="button" id="dismissTip" aria-label="إغلاق">×</button>
+  </div>
+
+  <section class="summary" id="summary" aria-label="الملخص"></section>
+
+  <div class="toolbar">
+    <div class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input type="search" id="search" placeholder="فتّش على اسم…" enterkeyhint="search" autocomplete="off">
+    </div>
+    <div class="filters" role="tablist" aria-label="تصفية">
+      <button type="button" class="chip" data-filter="all">الكل</button>
+      <button type="button" class="chip active" data-filter="unpaid">مش مدفوع</button>
+      <button type="button" class="chip" data-filter="paid">مدفوع</button>
+    </div>
+  </div>
+
+  <main id="list"></main>
+  </div><!-- /appShell -->
+
+  <button type="button" class="fab" id="addBtn">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+    إضافة
+  </button>
+
+  <div class="backdrop" id="backdrop"></div>
+
+  <div class="sheet" id="editSheet" role="dialog" aria-modal="true" aria-labelledby="editTitle" hidden>
+    <div class="handle"></div>
+    <h3 id="editTitle">إضافة حساب</h3>
+    <div class="field">
+      <label for="fName">اسم الشخص</label>
+      <input type="text" id="fName" maxlength="80" autocomplete="name" list="nameHints">
+      <datalist id="nameHints"></datalist>
+    </div>
+    <div class="field">
+      <label for="fAmount">المبلغ</label>
+      <input type="text" id="fAmount" inputmode="decimal" enterkeyhint="next">
+    </div>
+    <div class="field">
+      <label>العملة</label>
+      <div class="seg" id="fCurrency">
+        <button type="button" class="active cur" data-cur="ILS">شيكل ₪</button>
+        <button type="button" data-cur="USD">دولار $</button>
+        <button type="button" data-cur="OTHER">ثانية</button>
+      </div>
+    </div>
+    <div class="field" id="otherCurWrap" hidden>
+      <label for="fSymbol">رمز العملة</label>
+      <input type="text" id="fSymbol" maxlength="8" placeholder="مثلاً € أو دينار">
+    </div>
+    <div class="field">
+      <label>الاتجاه</label>
+      <div class="seg" id="fDirection">
+        <button type="button" class="active in" data-dir="in">إلي عنده</button>
+        <button type="button" class="out" data-dir="out">عليّ إلو</button>
+      </div>
+    </div>
+    <div class="field">
+      <label for="fNote">السبب / ملاحظة</label>
+      <textarea id="fNote" maxlength="200" placeholder="مثلاً فيديو AI"></textarea>
+    </div>
+    <div class="field">
+      <label for="fDate">التاريخ</label>
+      <input type="date" id="fDate">
+    </div>
+    <div class="sheet-actions">
+      <button type="button" class="btn ghost" id="editCancel">إلغاء</button>
+      <button type="button" class="btn primary" id="editSave">حفظ</button>
+    </div>
+  </div>
+
+  <div class="sheet" id="detailSheet" role="dialog" aria-modal="true" aria-labelledby="detailTitle" hidden>
+    <div class="handle"></div>
+    <h3 id="detailTitle">تفاصيل الحساب</h3>
+    <div id="detailBody"></div>
+    <div class="sheet-actions">
+      <button type="button" class="btn ghost" id="detailClose">إغلاق</button>
+    </div>
+  </div>
+
+  <div class="sheet" id="paySheet" role="dialog" aria-modal="true" aria-labelledby="payTitle" hidden>
+    <div class="handle"></div>
+    <h3 id="payTitle">تسجيل دفعة</h3>
+    <div class="remain-line" id="payRemain"></div>
+    <div class="field">
+      <label for="pAmount">مبلغ الدفعة</label>
+      <input type="text" id="pAmount" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="pNote">ملاحظة (اختياري)</label>
+      <input type="text" id="pNote" maxlength="120">
+    </div>
+    <div class="field">
+      <label for="pDate">تاريخ الدفعة</label>
+      <input type="date" id="pDate">
+    </div>
+    <div class="sheet-actions">
+      <button type="button" class="btn ghost" id="payCancel">إلغاء</button>
+      <button type="button" class="btn pink" id="paySave">تسجيل</button>
+    </div>
+  </div>
+
+  <div class="sheet" id="confirmSheet" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" hidden>
+    <div class="handle"></div>
+    <h3 id="confirmTitle">تأكيد</h3>
+    <p id="confirmText" style="color:var(--text-soft);margin-bottom:16px;"></p>
+    <div class="sheet-actions">
+      <button type="button" class="btn ghost" id="confirmNo">إلغاء</button>
+      <button type="button" class="btn danger" id="confirmYes">تأكيد</button>
+    </div>
+  </div>
+
+
+  <div class="sheet" id="settingsSheet" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" hidden>
+    <div class="handle"></div>
+    <h3 id="settingsTitle">القفل والحماية</h3>
+    <p class="settings-note">القفل بحمي شاشة التطبيق على هاد الهاتف بس، حتى ما حدا يفتحه وأنت بعيد. البيانات بتضل محفوظة محلياً على جهازك ومش مشفّرة برا التطبيق، يعني حدا يوصل لملفات الهاتف ممكن يشوفها. الأفضل تصدّر نسخة احتياطية وتحفظها بمكان آمن.</p>
+    <button type="button" class="settings-row" id="changePinBtn">تغيير الرقم السري <span class="meta">بدو الرقم الحالي</span></button>
+    <button type="button" class="settings-row" id="bioToggleBtn">تفعيل فتح الوجه أو البصمة <span class="meta" id="bioToggleMeta"></span></button>
+    <div class="sheet-actions">
+      <button type="button" class="btn ghost" id="settingsClose">إغلاق</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <input type="file" id="importFile" accept="application/json,.json" hidden>
+
+  <noscript>لازم تفعّل JavaScript حتى يشتغل تطبيق حسابات فليكر.</noscript>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var STORAGE_KEY = 'flicker-ledger-v1';
+    var TIP_KEY = 'flicker-ledger-tip-dismissed';
+    var MONTHS = [
+      'كانون الثاني', 'شباط', 'آذار', 'نيسان', 'أيار', 'حزيران',
+      'تموز', 'آب', 'أيلول', 'تشرين الأول', 'تشرين الثاني', 'كانون الأول'
+    ];
+    var ARABIC_DIGITS = '٠١٢٣٤٥٦٧٨٩';
+
+    var SEED = [
+      { name: 'سناكي', amount: 650, currency: 'ILS', symbol: '₪', direction: 'in', note: 'فيديو AI' },
+      { name: 'تقي الأطرش', amount: 350, currency: 'ILS', symbol: '₪', direction: 'in', note: 'فيديو AI' },
+      { name: 'الحرباوي', amount: 300, currency: 'ILS', symbol: '₪', direction: 'in', note: 'فيديو AI' },
+      { name: 'حسين', amount: 12, currency: 'USD', symbol: '$', direction: 'in', note: 'اشتراك إضافة After Effects' }
+    ];
+
+    var state = {
+      entries: [],
+      initialized: false,
+      filter: 'unpaid',
+      query: '',
+      editingId: null,
+      payingId: null,
+      detailId: null,
+      confirmAction: null
+    };
+
+    var els = {
+      list: document.getElementById('list'),
+      summary: document.getElementById('summary'),
+      search: document.getElementById('search'),
+      menuBtn: document.getElementById('menuBtn'),
+      menu: document.getElementById('menu'),
+      backdrop: document.getElementById('backdrop'),
+      editSheet: document.getElementById('editSheet'),
+      detailSheet: document.getElementById('detailSheet'),
+      paySheet: document.getElementById('paySheet'),
+      confirmSheet: document.getElementById('confirmSheet'),
+      toast: document.getElementById('toast'),
+      importFile: document.getElementById('importFile'),
+      nameHints: document.getElementById('nameHints'),
+      otherCurWrap: document.getElementById('otherCurWrap'),
+      installTip: document.getElementById('installTip'),
+      lockScreen: document.getElementById('lockScreen'),
+      lockInner: document.getElementById('lockInner'),
+      lockTitle: document.getElementById('lockTitle'),
+      pinDots: document.getElementById('pinDots'),
+      lockError: document.getElementById('lockError'),
+      lockWait: document.getElementById('lockWait'),
+      keypad: document.getElementById('keypad'),
+      bioBtn: document.getElementById('bioBtn'),
+      forgotBtn: document.getElementById('forgotBtn'),
+      lockCancelBtn: document.getElementById('lockCancelBtn'),
+      resetPanel: document.getElementById('resetPanel'),
+      settingsSheet: document.getElementById('settingsSheet')
+    };
+
+    function uid() {
+      if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+      return 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+    }
+
+    function todayISO() {
+      var d = new Date();
+      var m = String(d.getMonth() + 1);
+      var day = String(d.getDate());
+      if (m.length < 2) m = '0' + m;
+      if (day.length < 2) day = '0' + day;
+      return d.getFullYear() + '-' + m + '-' + day;
+    }
+
+    function formatDate(iso) {
+      if (!iso) return '';
+      var parts = String(iso).split('-');
+      if (parts.length < 3) return iso;
+      var y = parts[0], mo = parseInt(parts[1], 10), d = parseInt(parts[2], 10);
+      if (!mo || mo < 1 || mo > 12) return iso;
+      return d + ' ' + MONTHS[mo - 1] + ' ' + y;
+    }
+
+    function formatMoney(amount, symbol) {
+      var n = Number(amount);
+      if (!isFinite(n)) n = 0;
+      var opts = Math.abs(n % 1) < 1e-9
+        ? { maximumFractionDigits: 0 }
+        : { minimumFractionDigits: 2, maximumFractionDigits: 2 };
+      return n.toLocaleString('en-US', opts) + ' ' + (symbol || '');
+    }
+
+    function parseAmount(s) {
+      var t = String(s == null ? '' : s).trim().replace(/,/g, '').replace(/\s/g, '');
+      t = t.replace(/[٠-٩]/g, function (ch) { return String(ARABIC_DIGITS.indexOf(ch)); });
+      var n = Number(t);
+      return isFinite(n) ? n : NaN;
+    }
+
+    function escapeHtml(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function symbolFor(currency, custom) {
+      if (currency === 'USD') return '$';
+      if (currency === 'ILS') return '₪';
+      return (custom && String(custom).trim()) ? String(custom).trim() : '…';
+    }
+
+    function isPaid(entry) {
+      return !!(entry.paid || Number(entry.remaining) <= 0);
+    }
+
+
+    var LOCK_KEY = 'flicker-ledger-lock';
+    var PBKDF2_ITERATIONS = 100000;
+    var RELLOCK_MS = 60000;
+    var MAX_DELAY_MS = 10 * 60 * 1000;
+
+    var lock = {
+      mode: 'unlock',
+      buffer: '',
+      pending: '',
+      bioAvailable: false,
+      hiddenAt: 0,
+      busy: false,
+      sessionReady: false,
+      waitTimer: null,
+      autoBioTried: false
+    };
+
+    function bufToB64(buf) {
+      var bytes = new Uint8Array(buf);
+      var s = '';
+      for (var i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
+      return btoa(s);
+    }
+
+    function b64ToBytes(b64) {
+      var s = atob(b64);
+      var bytes = new Uint8Array(s.length);
+      for (var i = 0; i < s.length; i++) bytes[i] = s.charCodeAt(i);
+      return bytes;
+    }
+
+    function equalBytes(a, b) {
+      if (!a || !b || a.length !== b.length) return false;
+      var diff = 0;
+      for (var i = 0; i < a.length; i++) diff |= a[i] ^ b[i];
+      return diff === 0;
+    }
+
+    function onlyDigits(s) {
+      var t = String(s || '');
+      t = t.replace(/[٠-٩]/g, function (ch) { return String(ARABIC_DIGITS.indexOf(ch)); });
+      return t.replace(/\D/g, '');
+    }
+
+    function readLock() {
+      try {
+        var raw = localStorage.getItem(LOCK_KEY);
+        if (!raw) return null;
+        var d = JSON.parse(raw);
+        if (!d || !d.salt || !d.hash) return null;
+        return d;
+      } catch (err) {
+        return null;
+      }
+    }
+
+    function writeLock(d) {
+      localStorage.setItem(LOCK_KEY, JSON.stringify(d));
+    }
+
+    function hasPin() {
+      return !!readLock();
+    }
+
+    function delayMsForFailCount(count) {
+      if (count < 5) return 0;
+      var steps = count - 5;
+      var ms = 30000 * Math.pow(2, steps);
+      return Math.min(ms, MAX_DELAY_MS);
+    }
+
+    function cryptoReady() {
+      return !!(window.crypto && crypto.subtle && crypto.subtle.importKey && crypto.subtle.deriveBits);
+    }
+
+    function hashPin(pin, saltBytes, iterations) {
+      var enc = new TextEncoder();
+      return crypto.subtle.importKey('raw', enc.encode(pin), 'PBKDF2', false, ['deriveBits'])
+        .then(function (key) {
+          return crypto.subtle.deriveBits(
+            { name: 'PBKDF2', salt: saltBytes, iterations: iterations, hash: 'SHA-256' },
+            key,
+            256
+          );
+        })
+        .then(function (bits) { return new Uint8Array(bits); });
+    }
+
+    function storeNewPin(pin, extras) {
+      if (!cryptoReady()) return Promise.reject(new Error('no-crypto'));
+      var salt = crypto.getRandomValues(new Uint8Array(16));
+      var iterations = PBKDF2_ITERATIONS;
+      return hashPin(pin, salt, iterations).then(function (hash) {
+        var prev = readLock() || {};
+        var rec = {
+          salt: bufToB64(salt),
+          hash: bufToB64(hash),
+          iterations: iterations,
+          pinLength: pin.length,
+          failCount: 0,
+          lockUntil: 0,
+          biometricEnabled: !!(extras && extras.keepBiometric) && !!prev.biometricEnabled,
+          credentialId: (extras && extras.keepBiometric) ? (prev.credentialId || null) : null,
+          userId: prev.userId || bufToB64(crypto.getRandomValues(new Uint8Array(16)))
+        };
+        writeLock(rec);
+        return rec;
+      });
+    }
+
+    function verifyPin(pin) {
+      var rec = readLock();
+      if (!rec) return Promise.resolve(false);
+      var salt = b64ToBytes(rec.salt);
+      var expected = b64ToBytes(rec.hash);
+      var iterations = rec.iterations || PBKDF2_ITERATIONS;
+      return hashPin(pin, salt, iterations).then(function (got) {
+        return equalBytes(got, expected);
+      });
+    }
+
+    function lockRemainingMs() {
+      var rec = readLock();
+      if (!rec || !rec.lockUntil) return 0;
+      return Math.max(0, rec.lockUntil - Date.now());
+    }
+
+    function renderDots() {
+      var rec = readLock();
+      var total = 6;
+      if (lock.mode === 'unlock' && rec && rec.pinLength) total = rec.pinLength;
+      else if (lock.buffer.length >= 4) total = Math.max(lock.buffer.length, 4);
+      else total = 6;
+      var html = '';
+      for (var i = 0; i < total; i++) {
+        html += '<span' + (i < lock.buffer.length ? ' class="filled"' : '') + '></span>';
+      }
+      els.pinDots.innerHTML = html;
+    }
+
+    function setLockError(msg) {
+      els.lockError.textContent = msg || '';
+    }
+
+    function setLockBusy(busy) {
+      lock.busy = busy;
+      var btns = els.keypad.querySelectorAll('button');
+      var blocked = busy || lockRemainingMs() > 0;
+      for (var i = 0; i < btns.length; i++) btns[i].disabled = blocked;
+    }
+
+    function updateWaitUi() {
+      var left = lockRemainingMs();
+      if (left <= 0) {
+        els.lockWait.hidden = true;
+        els.lockWait.textContent = '';
+        if (lock.waitTimer) {
+          clearInterval(lock.waitTimer);
+          lock.waitTimer = null;
+        }
+        setLockBusy(lock.busy);
+        return;
+      }
+      var secs = Math.ceil(left / 1000);
+      els.lockWait.hidden = false;
+      els.lockWait.textContent = 'محاولات غلط كتير. انتظر ' + secs + ' ثانية.';
+      setLockBusy(false);
+    }
+
+    function startWaitTicker() {
+      updateWaitUi();
+      if (lockRemainingMs() <= 0) return;
+      if (lock.waitTimer) clearInterval(lock.waitTimer);
+      lock.waitTimer = setInterval(updateWaitUi, 250);
+    }
+
+    function showLockScreen(mode, title) {
+      lock.mode = mode;
+      lock.buffer = '';
+      lock.autoBioTried = false;
+      setLockError('');
+      els.lockTitle.textContent = title;
+      document.body.classList.add('locked');
+      els.lockScreen.classList.add('show');
+      els.lockInner.hidden = false;
+      els.resetPanel.hidden = true;
+      var changing = mode.indexOf('change') === 0 || mode.indexOf('setup') === 0;
+      els.forgotBtn.hidden = mode !== 'unlock';
+      els.lockCancelBtn.hidden = !(mode.indexOf('change') === 0);
+      updateBioButton();
+      renderDots();
+      startWaitTicker();
+      if (mode === 'unlock') maybeAutoBio();
+    }
+
+    function hideLockScreen() {
+      document.body.classList.remove('locked');
+      els.lockScreen.classList.remove('show');
+      lock.buffer = '';
+      lock.pending = '';
+      if (lock.waitTimer) {
+        clearInterval(lock.waitTimer);
+        lock.waitTimer = null;
+      }
+    }
+
+    function buildKeypad() {
+      var keys = [
+        { v: '1', l: '1' }, { v: '2', l: '2' }, { v: '3', l: '3' },
+        { v: '4', l: '4' }, { v: '5', l: '5' }, { v: '6', l: '6' },
+        { v: '7', l: '7' }, { v: '8', l: '8' }, { v: '9', l: '9' },
+        { v: 'back', l: '⌫', a: true }, { v: '0', l: '0' }, { v: 'ok', l: 'تم', a: true }
+      ];
+      els.keypad.innerHTML = keys.map(function (k) {
+        return '<button type="button" class="' + (k.a ? 'key-action' : '') + '" data-key="' + k.v + '" aria-label="' +
+          (k.v === 'back' ? 'مسح' : (k.v === 'ok' ? 'تأكيد' : k.l)) + '">' + k.l + '</button>';
+      }).join('');
+    }
+
+    function revealApp() {
+      if (!lock.sessionReady) {
+        load();
+        render();
+        maybeShowTip();
+        lock.sessionReady = true;
+      } else {
+        render();
+      }
+      hideLockScreen();
+    }
+
+    function lockApp() {
+      if (!hasPin()) return;
+      if (document.body.classList.contains('locked') && lock.mode === 'unlock') return;
+      hideAllSheets();
+      closeMenu();
+      els.list.innerHTML = '';
+      els.summary.innerHTML = '';
+      showLockScreen('unlock', 'أدخل الرقم السري');
+    }
+
+    function onPinAccepted() {
+      var rec = readLock();
+      if (rec) {
+        rec.failCount = 0;
+        rec.lockUntil = 0;
+        writeLock(rec);
+      }
+      revealApp();
+    }
+
+    function onPinRejected() {
+      var rec = readLock() || {};
+      rec.failCount = (rec.failCount || 0) + 1;
+      var delay = delayMsForFailCount(rec.failCount);
+      rec.lockUntil = delay ? Date.now() + delay : 0;
+      writeLock(rec);
+      lock.buffer = '';
+      renderDots();
+      els.lockInner.classList.remove('shake');
+      void els.lockInner.offsetWidth;
+      els.lockInner.classList.add('shake');
+      if (delay) {
+        setLockError('الرقم غلط');
+        startWaitTicker();
+      } else {
+        var left = Math.max(0, 5 - rec.failCount);
+        setLockError(left ? ('الرقم غلط. باقي ' + left + ' محاولات قبل الانتظار.') : 'الرقم غلط');
+      }
+    }
+
+    function submitBuffer() {
+      if (lock.busy || lockRemainingMs() > 0) return;
+      var pin = lock.buffer;
+      if (pin.length < 4 || pin.length > 6) {
+        setLockError('الرقم لازم يكون من 4 لـ 6 خانات');
+        return;
+      }
+      var mode = lock.mode;
+      if (mode === 'setup') {
+        lock.pending = pin;
+        lock.buffer = '';
+        setLockError('');
+        showLockScreen('setup2', 'أعد إدخال الرقم السري');
+        lock.pending = pin;
+        return;
+      }
+      if (mode === 'setup2') {
+        if (pin !== lock.pending) {
+          lock.buffer = '';
+          lock.pending = '';
+          showLockScreen('setup', 'اختر رقم سري من 4 لـ 6 خانات');
+          setLockError('الرقمان مش متطابقين، حاول كمان مرة');
+          return;
+        }
+        setLockBusy(true);
+        storeNewPin(pin).then(function () {
+          setLockBusy(false);
+          lock.pending = '';
+          onPinAccepted();
+        }).catch(function () {
+          setLockBusy(false);
+          setLockError('ما قدرنا نحفظ الرقم. جرّب كمان مرة.');
+        });
+        return;
+      }
+      if (mode === 'unlock') {
+        setLockBusy(true);
+        verifyPin(pin).then(function (ok) {
+          setLockBusy(false);
+          if (ok) onPinAccepted();
+          else onPinRejected();
+        }).catch(function () {
+          setLockBusy(false);
+          setLockError('صار خطأ، جرّب كمان مرة');
+        });
+        return;
+      }
+      if (mode === 'change-current') {
+        setLockBusy(true);
+        verifyPin(pin).then(function (ok) {
+          setLockBusy(false);
+          if (!ok) {
+            onPinRejected();
+            return;
+          }
+          var rec = readLock();
+          if (rec) { rec.failCount = 0; rec.lockUntil = 0; writeLock(rec); }
+          lock.buffer = '';
+          setLockError('');
+          showLockScreen('change-new', 'أدخل الرقم السري الجديد');
+        }).catch(function () {
+          setLockBusy(false);
+          setLockError('صار خطأ، جرّب كمان مرة');
+        });
+        return;
+      }
+      if (mode === 'change-new') {
+        lock.pending = pin;
+        lock.buffer = '';
+        setLockError('');
+        showLockScreen('change-confirm', 'أعد إدخال الرقم الجديد');
+        lock.pending = pin;
+        return;
+      }
+      if (mode === 'change-confirm') {
+        if (pin !== lock.pending) {
+          lock.buffer = '';
+          lock.pending = '';
+          showLockScreen('change-new', 'أدخل الرقم السري الجديد');
+          setLockError('الرقمان مش متطابقين، حاول كمان مرة');
+          return;
+        }
+        setLockBusy(true);
+        storeNewPin(pin, { keepBiometric: true }).then(function () {
+          setLockBusy(false);
+          lock.pending = '';
+          hideLockScreen();
+          toast('تم تغيير الرقم السري');
+        }).catch(function () {
+          setLockBusy(false);
+          setLockError('ما قدرنا نغيّر الرقم. جرّب كمان مرة.');
+        });
+      }
+    }
+
+    function pressKey(key) {
+      if (lock.busy || lockRemainingMs() > 0) return;
+      if (els.resetPanel && !els.resetPanel.hidden) return;
+      if (key === 'back') {
+        lock.buffer = lock.buffer.slice(0, -1);
+        setLockError('');
+        renderDots();
+        return;
+      }
+      if (key === 'ok') {
+        submitBuffer();
+        return;
+      }
+      if (!/^\d$/.test(key)) return;
+      var rec = readLock();
+      var max = 6;
+      if (lock.mode === 'unlock' && rec && rec.pinLength) max = rec.pinLength;
+      if (lock.buffer.length >= max) return;
+      lock.buffer += key;
+      renderDots();
+      if (lock.mode === 'unlock' && rec && rec.pinLength && lock.buffer.length === rec.pinLength) {
+        submitBuffer();
+      }
+    }
+
+    function bioSupportedApi() {
+      return !!(window.PublicKeyCredential && typeof PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable === 'function' && navigator.credentials && navigator.credentials.create && navigator.credentials.get);
+    }
+
+    function refreshBioAvailability() {
+      if (!bioSupportedApi()) {
+        lock.bioAvailable = false;
+        return Promise.resolve(false);
+      }
+      return PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable()
+        .then(function (ok) {
+          lock.bioAvailable = !!ok;
+          return lock.bioAvailable;
+        })
+        .catch(function () {
+          lock.bioAvailable = false;
+          return false;
+        });
+    }
+
+    function updateBioButton() {
+      var rec = readLock();
+      var show = lock.mode === 'unlock' && lock.bioAvailable && rec && rec.biometricEnabled && rec.credentialId && lockRemainingMs() <= 0;
+      els.bioBtn.hidden = !show;
+    }
+
+    function updateSettingsBio() {
+      var rec = readLock();
+      var btn = document.getElementById('bioToggleBtn');
+      var meta = document.getElementById('bioToggleMeta');
+      if (!lock.bioAvailable) {
+        btn.hidden = false;
+        btn.disabled = true;
+        meta.textContent = 'جهازك أو متصفحك ما بيدعم البصمة/الوجه من هون';
+        btn.childNodes[0].textContent = 'فتح الوجه أو البصمة ';
+        return;
+      }
+      btn.disabled = false;
+      btn.hidden = false;
+      var on = !!(rec && rec.biometricEnabled && rec.credentialId);
+      btn.childNodes[0].textContent = on ? 'إيقاف فتح الوجه أو البصمة ' : 'تفعيل فتح الوجه أو البصمة ';
+      meta.textContent = on ? 'مفعّل' : 'اختياري — الرقم السري يبقى موجود';
+    }
+
+    function rpIdForWebAuthn() {
+      var h = location.hostname;
+      if (!h) return undefined;
+      return h;
+    }
+
+    function webAuthnCreate() {
+      var rec = readLock();
+      if (!rec) return Promise.reject(new Error('no-pin'));
+      var userId = rec.userId ? b64ToBytes(rec.userId) : crypto.getRandomValues(new Uint8Array(16));
+      if (!rec.userId) {
+        rec.userId = bufToB64(userId);
+        writeLock(rec);
+      }
+      var opts = {
+        publicKey: {
+          challenge: crypto.getRandomValues(new Uint8Array(32)),
+          rp: { name: 'حسابات فليكر' },
+          user: { id: userId, name: 'flicker-ledger', displayName: 'حسابات فليكر' },
+          pubKeyCredParams: [
+            { type: 'public-key', alg: -7 },
+            { type: 'public-key', alg: -257 }
+          ],
+          authenticatorSelection: {
+            authenticatorAttachment: 'platform',
+            userVerification: 'required',
+            residentKey: 'preferred',
+            requireResidentKey: false
+          },
+          timeout: 60000,
+          attestation: 'none'
+        }
+      };
+      var rpId = rpIdForWebAuthn();
+      if (rpId) opts.publicKey.rp.id = rpId;
+      return navigator.credentials.create(opts).then(function (cred) {
+        if (!cred || !cred.id) throw new Error('no-cred');
+        var rawId = cred.rawId ? bufToB64(cred.rawId) : cred.id;
+        rec = readLock() || rec;
+        rec.biometricEnabled = true;
+        rec.credentialId = rawId;
+        writeLock(rec);
+        return rec;
+      });
+    }
+
+    function webAuthnGet() {
+      var rec = readLock();
+      if (!rec || !rec.credentialId) return Promise.reject(new Error('no-cred'));
+      var idBytes;
+      try { idBytes = b64ToBytes(rec.credentialId); }
+      catch (err) { return Promise.reject(err); }
+      var opts = {
+        publicKey: {
+          challenge: crypto.getRandomValues(new Uint8Array(32)),
+          allowCredentials: [{ type: 'public-key', id: idBytes, transports: ['internal'] }],
+          userVerification: 'required',
+          timeout: 60000
+        }
+      };
+      var rpId = rpIdForWebAuthn();
+      if (rpId) opts.publicKey.rpId = rpId;
+      return navigator.credentials.get(opts);
+    }
+
+    function maybeAutoBio() {
+      var rec = readLock();
+      if (lock.autoBioTried) return;
+      if (!(lock.bioAvailable && rec && rec.biometricEnabled && rec.credentialId && lockRemainingMs() <= 0)) return;
+      lock.autoBioTried = true;
+      tryBiometric(true);
+    }
+
+    function tryBiometric(silent) {
+      if (lock.busy || lockRemainingMs() > 0) return;
+      lock.busy = true;
+      updateBioButton();
+      webAuthnGet().then(function (asserted) {
+        lock.busy = false;
+        if (!asserted) {
+          if (!silent) setLockError('ما تمّ الفتح بالبصمة. استخدم الرقم السري.');
+          return;
+        }
+        onPinAccepted();
+      }).catch(function (err) {
+        lock.busy = false;
+        if (!silent) setLockError('ما تمّ الفتح بالبصمة. استخدم الرقم السري.');
+      });
+    }
+
+    function resetAppData() {
+      try { localStorage.removeItem(STORAGE_KEY); } catch (err) {}
+      try { localStorage.removeItem(LOCK_KEY); } catch (err) {}
+      try { localStorage.removeItem(TIP_KEY); } catch (err) {}
+      state.entries = [];
+      state.initialized = false;
+      lock.sessionReady = false;
+      lock.pending = '';
+      lock.buffer = '';
+      els.list.innerHTML = '';
+      els.summary.innerHTML = '';
+      els.resetPanel.hidden = true;
+      document.getElementById('resetConfirm').value = '';
+      if (hasPin()) {
+        showLockScreen('unlock', 'أدخل الرقم السري');
+      } else {
+        showLockScreen('setup', 'اختر رقم سري من 4 لـ 6 خانات');
+      }
+    }
+
+    function bootLock() {
+      buildKeypad();
+      if (!cryptoReady()) {
+        showLockScreen('setup', 'المتصفح ما بدعم حفظ رقم سري آمن');
+        setLockError('لازم متصفح أحدث فيه Web Crypto حتى نقدر نحمي التطبيق.');
+        setLockBusy(true);
+        els.forgotBtn.hidden = true;
+        return;
+      }
+      refreshBioAvailability().then(function () {
+        updateBioButton();
+        if (lock.mode === 'unlock') maybeAutoBio();
+      });
+      if (!hasPin()) {
+        showLockScreen('setup', 'اختر رقم سري من 4 لـ 6 خانات');
+      } else {
+        showLockScreen('unlock', 'أدخل الرقم السري');
+      }
+    }
+
+    function load() {
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return seed();
+        var data = JSON.parse(raw);
+        if (!data || !Array.isArray(data.entries)) return seed();
+        state.initialized = !!data.initialized;
+        state.entries = data.entries.map(normalizeEntry);
+        if (!state.initialized && state.entries.length === 0) return seed();
+      } catch (err) {
+        seed();
+      }
+    }
+
+    function seed() {
+      var now = Date.now();
+      state.entries = SEED.map(function (row, i) {
+        return {
+          id: uid(),
+          name: row.name,
+          amount: row.amount,
+          remaining: row.amount,
+          currency: row.currency,
+          currencySymbol: row.symbol,
+          direction: row.direction,
+          note: row.note,
+          date: '2026-11-11',
+          paid: false,
+          payments: [],
+          createdAt: now + i,
+          updatedAt: now + i
+        };
+      });
+      state.initialized = true;
+      save();
+    }
+
+    function normalizeEntry(e) {
+      var amount = Number(e.amount);
+      if (!isFinite(amount)) amount = 0;
+      var remaining = e.remaining == null ? amount : Number(e.remaining);
+      if (!isFinite(remaining)) remaining = amount;
+      var payments = Array.isArray(e.payments) ? e.payments : [];
+      var paid = !!(e.paid || remaining <= 0);
+      if (paid) remaining = Math.min(remaining, 0);
+      return {
+        id: e.id || uid(),
+        name: String(e.name || '').trim(),
+        amount: amount,
+        remaining: paid ? 0 : remaining,
+        currency: e.currency === 'USD' || e.currency === 'OTHER' ? e.currency : 'ILS',
+        currencySymbol: e.currencySymbol || symbolFor(e.currency, e.currencySymbol),
+        direction: e.direction === 'out' ? 'out' : 'in',
+        note: String(e.note || ''),
+        date: e.date || todayISO(),
+        paid: paid,
+        payments: payments,
+        createdAt: e.createdAt || Date.now(),
+        updatedAt: e.updatedAt || Date.now()
+      };
+    }
+
+    function save() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        initialized: true,
+        entries: state.entries
+      }));
+    }
+
+    function findEntry(id) {
+      for (var i = 0; i < state.entries.length; i++) {
+        if (state.entries[i].id === id) return state.entries[i];
+      }
+      return null;
+    }
+
+    function toast(msg) {
+      els.toast.textContent = msg;
+      els.toast.classList.add('show');
+      clearTimeout(toast._t);
+      toast._t = setTimeout(function () { els.toast.classList.remove('show'); }, 2400);
+    }
+
+    function currencyTotals(entries, direction) {
+      var map = {};
+      var order = [];
+      entries.forEach(function (e) {
+        if (e.direction !== direction) return;
+        if (isPaid(e)) return;
+        var key = e.currency + '\0' + e.currencySymbol;
+        if (!map[key]) {
+          map[key] = { currency: e.currency, symbol: e.currencySymbol, total: 0 };
+          order.push(key);
+        }
+        map[key].total += Number(e.remaining) || 0;
+      });
+      return order.map(function (k) { return map[k]; }).filter(function (r) { return r.total > 0; });
+    }
+
+    function renderSummary() {
+      function card(kind, title, rows) {
+        var body;
+        if (!rows.length) {
+          body = '<div class="sum-empty">0 ₪</div>';
+        } else {
+          body = '<div class="sum-rows">' + rows.map(function (r) {
+            return '<div class="sum-row">' + escapeHtml(formatMoney(r.total, r.symbol)) + '</div>';
+          }).join('') + '</div>';
+        }
+        return '<article class="sum-card ' + kind + '"><h2>' + title + '</h2>' + body + '</article>';
+      }
+      els.summary.innerHTML =
+        card('in', 'إلي عنده', currencyTotals(state.entries, 'in')) +
+        card('out', 'عليّ إلو', currencyTotals(state.entries, 'out'));
+    }
+
+    function visibleEntries() {
+      var q = state.query.trim();
+      return state.entries.filter(function (e) {
+        if (state.filter === 'paid' && !isPaid(e)) return false;
+        if (state.filter === 'unpaid' && isPaid(e)) return false;
+        if (q && e.name.indexOf(q) === -1) return false;
+        return true;
+      });
+    }
+
+    function groupByPerson(entries) {
+      var groups = [];
+      var index = {};
+      entries.forEach(function (e) {
+        var name = e.name || 'بدون اسم';
+        if (!index.hasOwnProperty(name)) {
+          index[name] = groups.length;
+          groups.push({ name: name, entries: [] });
+        }
+        groups[index[name]].entries.push(e);
+      });
+      groups.forEach(function (g) {
+        g.entries.sort(function (a, b) {
+          if (a.date === b.date) return (b.createdAt || 0) - (a.createdAt || 0);
+          return a.date < b.date ? 1 : -1;
+        });
+      });
+      groups.sort(function (a, b) {
+        var aUnpaid = a.entries.some(function (e) { return !isPaid(e); });
+        var bUnpaid = b.entries.some(function (e) { return !isPaid(e); });
+        if (aUnpaid !== bUnpaid) return aUnpaid ? -1 : 1;
+        return a.name.localeCompare(b.name, 'ar');
+      });
+      return groups;
+    }
+
+    function personBalanceText(entries) {
+      var parts = [];
+      ['in', 'out'].forEach(function (dir) {
+        var rows = currencyTotals(entries, dir);
+        rows.forEach(function (r) {
+          var label = dir === 'in' ? 'إلي' : 'عليّ';
+          var cls = dir === 'in' ? 'in' : 'out';
+          parts.push('<span class="' + cls + '">' + label + ' ' + escapeHtml(formatMoney(r.total, r.symbol)) + '</span>');
+        });
+      });
+      if (!parts.length) return '<span>مسدد</span>';
+      return parts.join(' · ');
+    }
+
+    function renderList() {
+      var entries = visibleEntries();
+      if (!entries.length) {
+        var msg = state.query
+          ? 'ما في نتائج لهالبحث.'
+          : (state.filter === 'paid' ? 'ما في حسابات مدفوعة بعد.' : (state.filter === 'unpaid' ? 'ما في حسابات مفتوحة. كل شي مسدد!' : 'ما في حسابات بعد. اضغط إضافة حتى تبدأ.'));
+        els.list.innerHTML = '<div class="empty"><strong>فاضي هون</strong>' + escapeHtml(msg) + '</div>';
+        return;
+      }
+      var groups = groupByPerson(entries);
+      els.list.innerHTML = groups.map(function (g) {
+        var rawName = g.name || '?';
+        var initialSrc = (rawName.indexOf('ال') === 0 && rawName.length > 2) ? rawName.slice(2) : rawName;
+        var initial = initialSrc.charAt(0) || '?';
+        var items = g.entries.map(function (e) {
+          var paid = isPaid(e);
+          var amtLabel = paid
+            ? formatMoney(e.amount, e.currencySymbol)
+            : (e.remaining !== e.amount
+              ? 'متبقي ' + formatMoney(e.remaining, e.currencySymbol)
+              : formatMoney(e.remaining, e.currencySymbol));
+          var sub = [
+            formatDate(e.date),
+            e.remaining !== e.amount ? 'الأصل ' + formatMoney(e.amount, e.currencySymbol) : ''
+          ].filter(Boolean).join(' · ');
+          var actions = paid ? '' : (
+            '<div class="entry-actions">' +
+              '<button type="button" class="btn" data-act="pay" data-id="' + escapeHtml(e.id) + '">دفعة</button>' +
+              '<button type="button" class="btn" data-act="settle" data-id="' + escapeHtml(e.id) + '">تعليم كمدفوع</button>' +
+            '</div>'
+          );
+          return (
+            '<article class="entry' + (paid ? ' paid' : '') + '">' +
+              '<div class="entry-top">' +
+                '<div class="entry-note">' + escapeHtml(e.note || 'بدون ملاحظة') + '</div>' +
+                '<div class="entry-amt">' + escapeHtml(amtLabel) + '</div>' +
+              '</div>' +
+              '<div class="entry-sub">' +
+                '<span class="badge ' + (e.direction === 'in' ? 'dir-in' : 'dir-out') + '">' +
+                  (e.direction === 'in' ? 'إلي عنده' : 'عليّ إلو') +
+                '</span>' +
+                '<span class="badge ' + (paid ? 'paid' : 'unpaid') + '">' + (paid ? 'مدفوع' : 'مش مدفوع') + '</span>' +
+                '<span>' + escapeHtml(sub) + '</span>' +
+              '</div>' +
+              actions +
+              '<div class="entry-actions">' +
+                '<button type="button" class="btn ghost" data-act="detail" data-id="' + escapeHtml(e.id) + '">التفاصيل</button>' +
+                '<button type="button" class="btn ghost" data-act="edit" data-id="' + escapeHtml(e.id) + '">تعديل</button>' +
+                '<button type="button" class="btn danger" data-act="delete" data-id="' + escapeHtml(e.id) + '">حذف</button>' +
+              '</div>' +
+            '</article>'
+          );
+        }).join('');
+        return (
+          '<section class="person open" data-person="' + escapeHtml(g.name) + '">' +
+            '<button type="button" class="person-head" data-act="toggle">' +
+              '<span class="avatar">' + escapeHtml(initial) + '</span>' +
+              '<span class="person-meta">' +
+                '<div class="person-name">' + escapeHtml(g.name) + '</div>' +
+                '<div class="person-balances">' + personBalanceText(g.entries) + '</div>' +
+              '</span>' +
+              '<span class="caret" aria-hidden="true">▾</span>' +
+            '</button>' +
+            '<div class="person-body">' + items + '</div>' +
+          '</section>'
+        );
+      }).join('');
+    }
+
+    function refreshNameHints() {
+      var names = [];
+      state.entries.forEach(function (e) {
+        if (e.name && names.indexOf(e.name) === -1) names.push(e.name);
+      });
+      els.nameHints.innerHTML = names.map(function (n) {
+        return '<option value="' + escapeHtml(n) + '">';
+      }).join('');
+    }
+
+    function render() {
+      renderSummary();
+      renderList();
+      refreshNameHints();
+    }
+
+    var openSheets = [];
+
+    function showSheet(el) {
+      el.hidden = false;
+      requestAnimationFrame(function () {
+        el.classList.add('open');
+        els.backdrop.classList.add('open');
+      });
+      if (openSheets.indexOf(el) === -1) openSheets.push(el);
+    }
+
+    function hideSheet(el) {
+      el.classList.remove('open');
+      setTimeout(function () {
+        if (!el.classList.contains('open')) el.hidden = true;
+      }, 280);
+      openSheets = openSheets.filter(function (s) { return s !== el; });
+      if (!openSheets.length) els.backdrop.classList.remove('open');
+    }
+
+    function hideAllSheets() {
+      [els.editSheet, els.detailSheet, els.paySheet, els.confirmSheet, els.settingsSheet].forEach(function (s) {
+        s.classList.remove('open');
+        s.hidden = true;
+      });
+      openSheets = [];
+      els.backdrop.classList.remove('open');
+      state.editingId = null;
+      state.payingId = null;
+      state.detailId = null;
+      state.confirmAction = null;
+    }
+
+    function closeMenu() {
+      els.menu.classList.remove('open');
+      els.menu.hidden = true;
+      els.menuBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    function currentCurrency() {
+      var btn = document.querySelector('#fCurrency button.active');
+      return btn ? btn.getAttribute('data-cur') : 'ILS';
+    }
+
+    function currentDirection() {
+      var btn = document.querySelector('#fDirection button.active');
+      return btn ? btn.getAttribute('data-dir') : 'in';
+    }
+
+    function setSeg(container, attr, value) {
+      var buttons = container.querySelectorAll('button');
+      for (var i = 0; i < buttons.length; i++) {
+        var on = buttons[i].getAttribute(attr) === value;
+        if (on) buttons[i].classList.add('active');
+        else buttons[i].classList.remove('active');
+      }
+    }
+
+    function openEditor(entry) {
+      state.editingId = entry ? entry.id : null;
+      document.getElementById('editTitle').textContent = entry ? 'تعديل الحساب' : 'إضافة حساب';
+      document.getElementById('fName').value = entry ? entry.name : '';
+      document.getElementById('fAmount').value = entry ? String(entry.amount) : '';
+      document.getElementById('fNote').value = entry ? entry.note : '';
+      document.getElementById('fDate').value = entry ? entry.date : todayISO();
+      var cur = entry ? entry.currency : 'ILS';
+      setSeg(document.getElementById('fCurrency'), 'data-cur', cur);
+      document.getElementById('fSymbol').value = entry && entry.currency === 'OTHER' ? entry.currencySymbol : '';
+      els.otherCurWrap.hidden = cur !== 'OTHER';
+      setSeg(document.getElementById('fDirection'), 'data-dir', entry ? entry.direction : 'in');
+      showSheet(els.editSheet);
+      setTimeout(function () { document.getElementById('fName').focus(); }, 200);
+    }
+
+    function saveEditor() {
+      var name = document.getElementById('fName').value.trim();
+      var amount = parseAmount(document.getElementById('fAmount').value);
+      var note = document.getElementById('fNote').value.trim();
+      var date = document.getElementById('fDate').value || todayISO();
+      var currency = currentCurrency();
+      var direction = currentDirection();
+      var symbol = symbolFor(currency, document.getElementById('fSymbol').value);
+      if (!name) { toast('أكتب اسم الشخص'); return; }
+      if (!isFinite(amount) || amount <= 0) { toast('أكتب مبلغ أكبر من صفر'); return; }
+
+      var now = Date.now();
+      if (state.editingId) {
+        var entry = findEntry(state.editingId);
+        if (!entry) return;
+        var paidTotal = 0;
+        (entry.payments || []).forEach(function (p) { paidTotal += Number(p.amount) || 0; });
+        entry.name = name;
+        entry.amount = amount;
+        entry.currency = currency;
+        entry.currencySymbol = symbol;
+        entry.direction = direction;
+        entry.note = note;
+        entry.date = date;
+        entry.remaining = Math.max(0, amount - paidTotal);
+        entry.paid = entry.remaining <= 0;
+        if (entry.paid) entry.remaining = 0;
+        entry.updatedAt = now;
+        toast('تم تعديل الحساب');
+      } else {
+        state.entries.push({
+          id: uid(),
+          name: name,
+          amount: amount,
+          remaining: amount,
+          currency: currency,
+          currencySymbol: symbol,
+          direction: direction,
+          note: note,
+          date: date,
+          paid: false,
+          payments: [],
+          createdAt: now,
+          updatedAt: now
+        });
+        toast('تم إضافة الحساب');
+      }
+      save();
+      hideSheet(els.editSheet);
+      state.editingId = null;
+      render();
+    }
+
+    function openDetail(id) {
+      var e = findEntry(id);
+      if (!e) return;
+      state.detailId = id;
+      document.getElementById('detailTitle').textContent = e.name;
+      var paid = isPaid(e);
+      var hist = (e.payments || []).slice().sort(function (a, b) {
+        return (a.date < b.date ? 1 : -1);
+      });
+      var histHtml;
+      if (!hist.length) {
+        histHtml = '<p style="color:var(--text-mute);font-size:0.85rem;">ما في دفعات مسجلة بعد.</p>';
+      } else {
+        histHtml = hist.map(function (p) {
+          return '<div class="hist-item"><span>' +
+            escapeHtml(formatMoney(p.amount, e.currencySymbol)) +
+            (p.note ? ' · ' + escapeHtml(p.note) : '') +
+            '</span><span style="color:var(--text-mute)">' + escapeHtml(formatDate(p.date)) + '</span></div>';
+        }).join('');
+      }
+      document.getElementById('detailBody').innerHTML =
+        '<div class="remain-line">' +
+          (paid ? 'الحساب مسدد بالكامل' : 'المتبقي ' + escapeHtml(formatMoney(e.remaining, e.currencySymbol))) +
+          '<div style="font-weight:600;color:var(--text-soft);font-size:0.85rem;margin-top:4px;">الأصل ' +
+          escapeHtml(formatMoney(e.amount, e.currencySymbol)) + ' · ' +
+          (e.direction === 'in' ? 'إلي عنده' : 'عليّ إلو') +
+          (e.note ? ' · ' + escapeHtml(e.note) : '') +
+          ' · ' + escapeHtml(formatDate(e.date)) +
+          '</div></div>' +
+        '<div class="history"><h4>سجل الدفعات</h4>' + histHtml + '</div>' +
+        '<div class="entry-actions">' +
+          (paid ? '' :
+            '<button type="button" class="btn pink" data-act="pay" data-id="' + escapeHtml(e.id) + '">تسجيل دفعة</button>' +
+            '<button type="button" class="btn" data-act="settle" data-id="' + escapeHtml(e.id) + '">تعليم كمدفوع</button>') +
+          '<button type="button" class="btn" data-act="edit" data-id="' + escapeHtml(e.id) + '">تعديل</button>' +
+          '<button type="button" class="btn danger" data-act="delete" data-id="' + escapeHtml(e.id) + '">حذف</button>' +
+        '</div>';
+      showSheet(els.detailSheet);
+    }
+
+    function openPay(id) {
+      var e = findEntry(id);
+      if (!e || isPaid(e)) { toast('هالحساب مسدد'); return; }
+      state.payingId = id;
+      document.getElementById('payRemain').textContent =
+        'المتبقي ' + formatMoney(e.remaining, e.currencySymbol) + ' — ' + e.name;
+      document.getElementById('pAmount').value = '';
+      document.getElementById('pNote').value = '';
+      document.getElementById('pDate').value = todayISO();
+      showSheet(els.paySheet);
+      setTimeout(function () { document.getElementById('pAmount').focus(); }, 200);
+    }
+
+    function savePay() {
+      var e = findEntry(state.payingId);
+      if (!e) return;
+      var amount = parseAmount(document.getElementById('pAmount').value);
+      if (!isFinite(amount) || amount <= 0) { toast('أكتب مبلغ الدفعة'); return; }
+      if (amount > e.remaining + 1e-9) {
+        toast('الدفعة أكبر من المتبقي، رح نسدد الكامل');
+        amount = e.remaining;
+      }
+      var note = document.getElementById('pNote').value.trim();
+      var date = document.getElementById('pDate').value || todayISO();
+      e.payments = e.payments || [];
+      e.payments.push({ id: uid(), amount: amount, date: date, note: note });
+      e.remaining = Math.max(0, Number(e.remaining) - amount);
+      if (e.remaining <= 1e-9) {
+        e.remaining = 0;
+        e.paid = true;
+      }
+      e.updatedAt = Date.now();
+      save();
+      hideSheet(els.paySheet);
+      state.payingId = null;
+      toast(e.paid ? 'تم تسديد الحساب بالكامل' : 'تم تسجيل الدفعة');
+      render();
+      if (state.detailId === e.id) openDetail(e.id);
+    }
+
+    function settleEntry(id) {
+      var e = findEntry(id);
+      if (!e || isPaid(e)) return;
+      var left = Number(e.remaining) || 0;
+      if (left > 0) {
+        e.payments = e.payments || [];
+        e.payments.push({ id: uid(), amount: left, date: todayISO(), note: 'تسديد كامل' });
+      }
+      e.remaining = 0;
+      e.paid = true;
+      e.updatedAt = Date.now();
+      save();
+      toast('صار الحساب مدفوع');
+      render();
+      if (state.detailId === id && els.detailSheet.classList.contains('open')) openDetail(id);
+    }
+
+    function deleteEntry(id) {
+      state.entries = state.entries.filter(function (e) { return e.id !== id; });
+      save();
+      toast('تم حذف الحساب');
+      hideAllSheets();
+      render();
+    }
+
+    function confirmAction(title, text, yesLabel, action) {
+      document.getElementById('confirmTitle').textContent = title;
+      document.getElementById('confirmText').textContent = text;
+      document.getElementById('confirmYes').textContent = yesLabel || 'تأكيد';
+      state.confirmAction = action;
+      showSheet(els.confirmSheet);
+    }
+
+    function exportData() {
+      var payload = {
+        app: 'حسابات فليكر',
+        brand: 'Flicker Creative Studio',
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        initialized: true,
+        entries: state.entries
+      };
+      var blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'flicker-ledger-' + todayISO() + '.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+      toast('تم تنزيل النسخة الاحتياطية');
+      closeMenu();
+    }
+
+    function importData(text) {
+      var data;
+      try { data = JSON.parse(text); } catch (err) {
+        toast('الملف مش JSON صالح');
+        return;
+      }
+      var list = null;
+      if (Array.isArray(data)) list = data;
+      else if (data && Array.isArray(data.entries)) list = data.entries;
+      if (!list) { toast('الملف ما فيه حسابات'); return; }
+      state.entries = list.map(normalizeEntry);
+      state.initialized = true;
+      save();
+      hideAllSheets();
+      render();
+      toast('تم استيراد ' + state.entries.length + ' حساب');
+    }
+
+    /* events */
+    document.getElementById('addBtn').addEventListener('click', function () {
+      closeMenu();
+      openEditor(null);
+    });
+
+    document.getElementById('editCancel').addEventListener('click', function () {
+      hideSheet(els.editSheet);
+      state.editingId = null;
+    });
+    document.getElementById('editSave').addEventListener('click', saveEditor);
+    document.getElementById('detailClose').addEventListener('click', function () {
+      hideSheet(els.detailSheet);
+      state.detailId = null;
+    });
+    document.getElementById('payCancel').addEventListener('click', function () {
+      hideSheet(els.paySheet);
+      state.payingId = null;
+    });
+    document.getElementById('paySave').addEventListener('click', savePay);
+    document.getElementById('confirmNo').addEventListener('click', function () {
+      hideSheet(els.confirmSheet);
+      state.confirmAction = null;
+    });
+    document.getElementById('confirmYes').addEventListener('click', function () {
+      var fn = state.confirmAction;
+      hideSheet(els.confirmSheet);
+      state.confirmAction = null;
+      if (typeof fn === 'function') fn();
+    });
+
+    els.backdrop.addEventListener('click', hideAllSheets);
+
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape') {
+        if (openSheets.length) hideAllSheets();
+        closeMenu();
+      }
+    });
+
+    document.getElementById('fName').addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter') { ev.preventDefault(); document.getElementById('fAmount').focus(); }
+    });
+    document.getElementById('fAmount').addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter') { ev.preventDefault(); saveEditor(); }
+    });
+    document.getElementById('pAmount').addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter') { ev.preventDefault(); savePay(); }
+    });
+
+    document.getElementById('fCurrency').addEventListener('click', function (ev) {
+      var btn = ev.target.closest('button[data-cur]');
+      if (!btn) return;
+      setSeg(document.getElementById('fCurrency'), 'data-cur', btn.getAttribute('data-cur'));
+      els.otherCurWrap.hidden = btn.getAttribute('data-cur') !== 'OTHER';
+      if (!els.otherCurWrap.hidden) document.getElementById('fSymbol').focus();
+    });
+    document.getElementById('fDirection').addEventListener('click', function (ev) {
+      var btn = ev.target.closest('button[data-dir]');
+      if (!btn) return;
+      setSeg(document.getElementById('fDirection'), 'data-dir', btn.getAttribute('data-dir'));
+    });
+
+    els.list.addEventListener('click', onActionClick);
+    document.getElementById('detailBody').addEventListener('click', onActionClick);
+
+    function onActionClick(ev) {
+      var btn = ev.target.closest('button[data-act]');
+      if (!btn) return;
+      var act = btn.getAttribute('data-act');
+      var id = btn.getAttribute('data-id');
+      if (act === 'toggle') {
+        var person = btn.closest('.person');
+        if (person) person.classList.toggle('open');
+        return;
+      }
+      if (act === 'edit') {
+        var entry = findEntry(id);
+        if (entry) openEditor(entry);
+        return;
+      }
+      if (act === 'detail') { openDetail(id); return; }
+      if (act === 'pay') { openPay(id); return; }
+      if (act === 'settle') {
+        confirmAction(
+          'تعليم كمدفوع؟',
+          'رح ينسجل تسديد لباقي المبلغ ويصير الحساب مدفوع.',
+          'تعليم كمدفوع',
+          function () { settleEntry(id); }
+        );
+        return;
+      }
+      if (act === 'delete') {
+        confirmAction(
+          'حذف الحساب؟',
+          'ما رح تقدر ترجع هالحركة إلا إذا عندك نسخة احتياطية.',
+          'حذف',
+          function () { deleteEntry(id); }
+        );
+      }
+    }
+
+    document.querySelectorAll('.chip').forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        state.filter = chip.getAttribute('data-filter');
+        document.querySelectorAll('.chip').forEach(function (c) {
+          if (c === chip) c.classList.add('active');
+          else c.classList.remove('active');
+        });
+        renderList();
+      });
+    });
+
+    els.search.addEventListener('input', function () {
+      state.query = els.search.value;
+      renderList();
+    });
+
+    els.menuBtn.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      var open = !els.menu.classList.contains('open');
+      if (open) {
+        els.menu.hidden = false;
+        els.menu.classList.add('open');
+        els.menuBtn.setAttribute('aria-expanded', 'true');
+      } else closeMenu();
+    });
+    document.addEventListener('click', function (ev) {
+      if (!els.menu.contains(ev.target) && ev.target !== els.menuBtn) closeMenu();
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', exportData);
+    document.getElementById('importBtn').addEventListener('click', function () {
+      closeMenu();
+      confirmAction(
+        'استيراد نسخة؟',
+        'الاستيراد رح يستبدل كل الحسابات الحالية. إذا بدك تحتفظ باللي عندك، صدّر نسخة أول.',
+        'اختيار ملف',
+        function () { els.importFile.click(); }
+      );
+    });
+    els.importFile.addEventListener('change', function () {
+      var file = els.importFile.files && els.importFile.files[0];
+      els.importFile.value = '';
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function () { importData(String(reader.result || '')); };
+      reader.onerror = function () { toast('ما قدرنا نقرأ الملف'); };
+      reader.readAsText(file);
+    });
+
+    document.getElementById('dismissTip').addEventListener('click', function () {
+      els.installTip.classList.remove('show');
+      try { localStorage.setItem(TIP_KEY, '1'); } catch (err) {}
+    });
+
+    function maybeShowTip() {
+      try {
+        if (localStorage.getItem(TIP_KEY)) return;
+      } catch (err) { return; }
+      var standalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone;
+      if (!standalone) els.installTip.classList.add('show');
+    }
+
+
+    els.keypad.addEventListener('click', function (ev) {
+      var btn = ev.target.closest('button[data-key]');
+      if (!btn) return;
+      pressKey(btn.getAttribute('data-key'));
+    });
+
+    document.addEventListener('keydown', function (ev) {
+      if (!document.body.classList.contains('locked')) return;
+      if (els.resetPanel && !els.resetPanel.hidden) return;
+      if (ev.key === 'Backspace') { ev.preventDefault(); pressKey('back'); return; }
+      if (ev.key === 'Enter') { ev.preventDefault(); pressKey('ok'); return; }
+      var d = onlyDigits(ev.key);
+      if (d.length === 1) { ev.preventDefault(); pressKey(d); }
+    });
+
+    els.bioBtn.addEventListener('click', function () { tryBiometric(false); });
+
+    els.forgotBtn.addEventListener('click', function () {
+      els.lockInner.hidden = true;
+      els.resetPanel.hidden = false;
+      document.getElementById('resetConfirm').value = '';
+      document.getElementById('resetConfirm').focus();
+    });
+    document.getElementById('resetCancel').addEventListener('click', function () {
+      els.resetPanel.hidden = true;
+      els.lockInner.hidden = false;
+      document.getElementById('resetConfirm').value = '';
+    });
+    document.getElementById('resetYes').addEventListener('click', function () {
+      var typed = document.getElementById('resetConfirm').value.trim();
+      if (typed !== 'حذف') {
+        setLockError('');
+        toast('اكتب كلمة حذف حتى نتأكد');
+        // toast is hidden while locked — show in-panel hint
+        var p = els.resetPanel.querySelector('.reset-hint');
+        if (!p) {
+          p = document.createElement('p');
+          p.className = 'reset-hint';
+          p.style.color = 'var(--danger)';
+          p.style.fontWeight = '700';
+          els.resetPanel.insertBefore(p, els.resetPanel.querySelector('.sheet-actions'));
+        }
+        p.textContent = 'اكتب كلمة «حذف» حرفياً حتى نكمّل المسح.';
+        return;
+      }
+      resetAppData();
+    });
+
+    els.lockCancelBtn.addEventListener('click', function () {
+      if (String(lock.mode || '').indexOf('change') !== 0) return;
+      lock.pending = '';
+      lock.buffer = '';
+      hideLockScreen();
+    });
+
+    document.getElementById('settingsBtn').addEventListener('click', function () {
+      closeMenu();
+      updateSettingsBio();
+      showSheet(els.settingsSheet);
+    });
+    document.getElementById('settingsClose').addEventListener('click', function () {
+      hideSheet(els.settingsSheet);
+    });
+    document.getElementById('changePinBtn').addEventListener('click', function () {
+      hideAllSheets();
+      showLockScreen('change-current', 'أدخل الرقم السري الحالي');
+    });
+    document.getElementById('bioToggleBtn').addEventListener('click', function () {
+      if (!lock.bioAvailable) return;
+      var rec = readLock();
+      var on = !!(rec && rec.biometricEnabled && rec.credentialId);
+      if (on) {
+        rec.biometricEnabled = false;
+        rec.credentialId = null;
+        writeLock(rec);
+        updateSettingsBio();
+        toast('تم إيقاف فتح الوجه أو البصمة. الرقم السري ما زال يشتغل.');
+        return;
+      }
+      webAuthnCreate().then(function () {
+        updateSettingsBio();
+        toast('صار فيك تفتح بالوجه أو البصمة. الرقم السري يبقى كخيار.');
+      }).catch(function () {
+        toast('ما تم تفعيل البصمة. تقدر تستخدم الرقم السري.');
+      });
+    });
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) {
+        lock.hiddenAt = Date.now();
+        return;
+      }
+      if (hasPin() && lock.sessionReady && lock.hiddenAt && (Date.now() - lock.hiddenAt > RELLOCK_MS)) {
+        lockApp();
+      }
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./sw.js').catch(function () {});
+      });
+    }
+
+    bootLock();
+  })();
+  </script>
+</body>
+</html>
