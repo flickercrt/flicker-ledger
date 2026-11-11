@@ -1,11 +1,12 @@
 /* مصّاري — service worker (offline cache) */
-const CACHE = 'flicker-ledger-v3';
+const CACHE = 'flicker-ledger-v4';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './apple-touch-icon.png'
 ];
 
 self.addEventListener('install', (event) => {

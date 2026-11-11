@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#7C3AED">
+  <meta name="theme-color" content="#0F7B4F">
   <meta name="color-scheme" content="dark">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -12,24 +12,26 @@
   <title>مصّاري</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="apple-touch-icon" href="icon-192.png">
   <style>
     :root {
-      --bg: #10081C;
-      --bg-elev: #1A102C;
-      --bg-card: #221536;
-      --bg-card-2: #2A1B42;
-      --violet: #7C3AED;
-      --violet-2: #8B5CF6;
-      --violet-dim: rgba(124, 58, 237, 0.28);
-      --pink: #EC4899;
-      --pink-dim: rgba(236, 72, 153, 0.22);
-      --text: #F8F4FF;
-      --text-soft: #C9B8E0;
-      --text-mute: #8E7AA8;
+      --bg: #0B1A13;
+      --bg-elev: #10241A;
+      --bg-card: #153226;
+      --bg-card-2: #1B3C2E;
+      --brand: #0F7B4F;
+      --brand-2: #12A56B;
+      --brand-dim: rgba(18, 165, 107, 0.28);
+      --accent: #D4AF37;
+      --accent-2: #F2C94C;
+      --accent-dim: rgba(242, 201, 76, 0.22);
+      --text: #F4FBF6;
+      --text-soft: #C5D9CC;
+      --text-mute: #8AA396;
       --line: rgba(255, 255, 255, 0.08);
-      --green: #34D399;
-      --green-dim: rgba(52, 211, 153, 0.16);
+      --green: #3DDC97;
+      --green-dim: rgba(61, 220, 151, 0.16);
       --rose: #FB7185;
       --rose-dim: rgba(251, 113, 133, 0.16);
       --danger: #F87171;
@@ -47,8 +49,8 @@
     body {
       font-family: var(--font);
       background:
-        radial-gradient(900px 480px at 100% -8%, rgba(236, 72, 153, 0.16), transparent 52%),
-        radial-gradient(720px 420px at -10% 0%, rgba(124, 58, 237, 0.38), transparent 50%),
+        radial-gradient(900px 480px at 100% -8%, rgba(212, 175, 55, 0.14), transparent 52%),
+        radial-gradient(720px 420px at -10% 0%, rgba(18, 165, 107, 0.32), transparent 50%),
         var(--bg);
       color: var(--text);
       line-height: 1.55;
@@ -81,7 +83,7 @@
       width: 48px;
       height: 48px;
       border-radius: 14px;
-      box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.35), var(--shadow);
+      box-shadow: 0 0 0 2px rgba(242, 201, 76, 0.4), var(--shadow);
       flex-shrink: 0;
     }
     .brand { flex: 1; min-width: 0; }
@@ -93,12 +95,9 @@
     }
     .brand .tagline {
       color: var(--text-mute);
-      font-size: 0.68rem;
+      font-size: 0.78rem;
       margin-top: 2px;
       line-height: 1.35;
-      direction: ltr;
-      text-align: right;
-      unicode-bidi: isolate;
     }
     .icon-btn {
       width: 44px;
@@ -139,7 +138,7 @@
       min-height: 44px;
       color: var(--text);
     }
-    .menu button:active { background: var(--violet-dim); }
+    .menu button:active { background: var(--brand-dim); }
     .menu .hint {
       padding: 10px 12px 8px;
       color: var(--text-mute);
@@ -217,10 +216,10 @@
       padding: 8px 8px;
     }
     .chip.active {
-      background: var(--violet);
-      border-color: var(--violet);
+      background: var(--brand);
+      border-color: var(--brand);
       color: #fff;
-      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
+      box-shadow: 0 4px 16px rgba(15, 123, 79, 0.45);
     }
 
     .person {
@@ -243,7 +242,7 @@
       width: 40px;
       height: 40px;
       border-radius: 12px;
-      background: linear-gradient(135deg, var(--violet), var(--pink));
+      background: linear-gradient(135deg, var(--brand), var(--accent));
       display: grid;
       place-items: center;
       font-weight: 800;
@@ -282,7 +281,7 @@
       border-radius: 999px;
       vertical-align: middle;
     }
-    .badge.unpaid { background: var(--pink-dim); color: #F9A8D4; }
+    .badge.unpaid { background: var(--accent-dim); color: var(--accent-2); }
     .badge.paid { background: var(--green-dim); color: var(--green); }
     .badge.dir-in { background: var(--green-dim); color: var(--green); }
     .badge.dir-out { background: var(--rose-dim); color: var(--rose); }
@@ -303,14 +302,14 @@
     }
     .btn:active { transform: scale(0.97); }
     .btn.primary {
-      background: var(--violet);
-      border-color: var(--violet);
+      background: var(--brand);
+      border-color: var(--brand);
       color: #fff;
     }
-    .btn.pink {
-      background: var(--pink);
-      border-color: var(--pink);
-      color: #fff;
+    .btn.accent {
+      background: linear-gradient(180deg, var(--accent-2), var(--accent));
+      border-color: var(--accent);
+      color: #0B1A13;
     }
     .btn.danger {
       background: var(--danger-dim);
@@ -337,14 +336,14 @@
       height: 56px;
       padding: 0 18px 0 16px;
       border-radius: 999px;
-      background: linear-gradient(135deg, var(--violet), var(--pink));
+      background: linear-gradient(135deg, var(--brand), var(--accent));
       color: #fff;
       font-weight: 800;
       font-size: 1rem;
       display: flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 10px 28px rgba(236, 72, 153, 0.38);
+      box-shadow: 0 10px 28px rgba(15, 123, 79, 0.45);
       z-index: 20;
     }
     .fab:active { transform: scale(0.97); }
@@ -413,8 +412,8 @@
     }
     .field textarea { min-height: 80px; resize: vertical; }
     .field input:focus, .field textarea:focus {
-      border-color: var(--violet-2);
-      box-shadow: 0 0 0 3px var(--violet-dim);
+      border-color: var(--brand-2);
+      box-shadow: 0 0 0 3px var(--brand-dim);
     }
     .seg {
       display: flex;
@@ -429,7 +428,7 @@
       font-weight: 700;
       padding: 8px 6px;
     }
-    .seg button.active.cur { background: var(--violet); border-color: var(--violet); color: #fff; }
+    .seg button.active.cur { background: var(--brand); border-color: var(--brand); color: #fff; }
     .seg button.active.in { background: var(--green-dim); border-color: var(--green); color: var(--green); }
     .seg button.active.out { background: var(--rose-dim); border-color: var(--rose); color: var(--rose); }
 
@@ -452,7 +451,7 @@
     }
     .hist-item:last-child { border-bottom: 0; }
     .remain-line {
-      background: var(--violet-dim);
+      background: var(--brand-dim);
       border-radius: 12px;
       padding: 10px 12px;
       margin-bottom: 12px;
@@ -487,7 +486,7 @@
       align-items: flex-start;
       gap: 10px;
       background: var(--bg-card);
-      border: 1px solid var(--violet-dim);
+      border: 1px solid var(--brand-dim);
       border-radius: 14px;
       padding: 10px 12px;
       margin-bottom: 14px;
@@ -519,8 +518,8 @@
       inset: 0;
       z-index: 100;
       background:
-        radial-gradient(900px 480px at 100% -8%, rgba(236, 72, 153, 0.16), transparent 52%),
-        radial-gradient(720px 420px at -10% 0%, rgba(124, 58, 237, 0.38), transparent 50%),
+        radial-gradient(900px 480px at 100% -8%, rgba(212, 175, 55, 0.14), transparent 52%),
+        radial-gradient(720px 420px at -10% 0%, rgba(18, 165, 107, 0.32), transparent 50%),
         var(--bg);
       padding: calc(16px + var(--safe-t)) 20px calc(16px + var(--safe-b));
       overflow: auto;
@@ -540,7 +539,7 @@
       height: 72px;
       border-radius: 20px;
       margin: 0 auto 14px;
-      box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.35), var(--shadow);
+      box-shadow: 0 0 0 2px rgba(242, 201, 76, 0.4), var(--shadow);
     }
     .lock-inner h1 {
       font-size: 1.28rem;
@@ -566,13 +565,13 @@
       width: 14px;
       height: 14px;
       border-radius: 50%;
-      border: 2px solid var(--violet-2);
+      border: 2px solid var(--accent-2);
       background: transparent;
-      transition: background .12s, transform .12s;
+      transition: background .12s, border-color .12s, transform .12s;
     }
     .pin-dots span.filled {
-      background: var(--pink);
-      border-color: var(--pink);
+      background: var(--accent-2);
+      border-color: var(--accent);
     }
     .lock-error {
       color: var(--danger);
@@ -582,7 +581,7 @@
       margin-bottom: 8px;
     }
     .lock-wait {
-      color: #F9A8D4;
+      color: var(--accent-2);
       font-size: 0.9rem;
       font-weight: 700;
       margin-bottom: 10px;
@@ -604,7 +603,7 @@
       font-weight: 800;
       color: var(--text);
     }
-    .keypad button:active { background: var(--violet-dim); transform: scale(0.96); }
+    .keypad button:active { background: var(--brand-dim); transform: scale(0.96); }
     .keypad button:disabled { opacity: 0.35; transform: none; }
     .keypad button.key-action {
       font-size: 0.95rem;
@@ -626,8 +625,8 @@
       min-height: 48px;
       padding: 8px 16px;
       border-radius: 999px;
-      background: var(--violet-dim);
-      border: 1px solid var(--violet);
+      background: var(--brand-dim);
+      border: 1px solid var(--brand);
       color: #fff;
       font-weight: 700;
       margin-bottom: 12px;
@@ -657,7 +656,7 @@
     .reset-panel h2 { font-size: 1.08rem; font-weight: 800; margin-bottom: 10px; }
     .reset-panel p { color: var(--text-soft); font-size: 0.88rem; margin-bottom: 12px; line-height: 1.55; }
     .settings-note {
-      background: var(--violet-dim);
+      background: var(--brand-dim);
       border-radius: 12px;
       padding: 12px;
       font-size: 0.82rem;
@@ -719,10 +718,10 @@
 
   <div id="appShell">
   <header class="app-header">
-    <img class="logo" src="icon-192.png" width="48" height="48" alt="فليكر">
+    <img class="logo" src="icon-192.png" width="48" height="48" alt="مصّاري">
     <div class="brand">
       <h1>مصّاري</h1>
-      <p class="tagline" dir="ltr">Crazy and professional at the same time.</p>
+      <p class="tagline">دفتر حساباتي</p>
     </div>
     <button type="button" class="icon-btn" id="menuBtn" aria-label="المزيد" aria-expanded="false">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.6" fill="currentColor" stroke="none"/></svg>
@@ -836,7 +835,7 @@
     </div>
     <div class="sheet-actions">
       <button type="button" class="btn ghost" id="payCancel">إلغاء</button>
-      <button type="button" class="btn pink" id="paySave">تسجيل</button>
+      <button type="button" class="btn accent" id="paySave">تسجيل</button>
     </div>
   </div>
 
@@ -1961,7 +1960,7 @@
         '<div class="history"><h4>سجل الدفعات</h4>' + histHtml + '</div>' +
         '<div class="entry-actions">' +
           (paid ? '' :
-            '<button type="button" class="btn pink" data-act="pay" data-id="' + escapeHtml(e.id) + '">تسجيل دفعة</button>' +
+            '<button type="button" class="btn accent" data-act="pay" data-id="' + escapeHtml(e.id) + '">تسجيل دفعة</button>' +
             '<button type="button" class="btn" data-act="settle" data-id="' + escapeHtml(e.id) + '">تعليم كمدفوع</button>') +
           '<button type="button" class="btn" data-act="edit" data-id="' + escapeHtml(e.id) + '">تعديل</button>' +
           '<button type="button" class="btn danger" data-act="delete" data-id="' + escapeHtml(e.id) + '">حذف</button>' +
@@ -2045,7 +2044,7 @@
     function exportData() {
       var payload = {
         app: 'مصّاري',
-        brand: 'Flicker Creative Studio',
+        brand: 'مصّاري',
         version: 1,
         exportedAt: new Date().toISOString(),
         initialized: true,
