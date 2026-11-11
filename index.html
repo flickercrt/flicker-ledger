@@ -7,9 +7,9 @@
   <meta name="color-scheme" content="dark">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="حسابات فليكر">
-  <meta name="description" content="دفتر حسابات شخصي — Flicker Creative Studio. Crazy and professional at the same time.">
-  <title>حسابات فليكر</title>
+  <meta name="apple-mobile-web-app-title" content="مصّاري">
+  <meta name="description" content="دفتر حساباتي الشخصي">
+  <title>مصّاري</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -688,7 +688,7 @@
   <div id="lockScreen" class="lock-screen" role="dialog" aria-modal="true" aria-labelledby="lockTitle">
     <div class="lock-inner" id="lockInner">
       <img class="lock-logo" src="icon-192.png" width="72" height="72" alt="">
-      <h1>حسابات فليكر</h1>
+      <h1>مصّاري</h1>
       <p class="lock-msg" id="lockTitle">أدخل الرقم السري</p>
       <div class="pin-dots" id="pinDots" aria-hidden="true"></div>
       <p class="lock-error" id="lockError" role="alert"></p>
@@ -721,7 +721,7 @@
   <header class="app-header">
     <img class="logo" src="icon-192.png" width="48" height="48" alt="فليكر">
     <div class="brand">
-      <h1>حسابات فليكر</h1>
+      <h1>مصّاري</h1>
       <p class="tagline" dir="ltr">Crazy and professional at the same time.</p>
     </div>
     <button type="button" class="icon-btn" id="menuBtn" aria-label="المزيد" aria-expanded="false">
@@ -731,7 +731,7 @@
       <button type="button" id="settingsBtn">القفل والحماية</button>
       <button type="button" id="exportBtn">تصدير نسخة احتياطية</button>
       <button type="button" id="importBtn">استيراد نسخة احتياطية</button>
-      <p class="hint">Flicker Creative Studio<br>البيانات محفوظة على جهازك فقط.</p>
+      <p class="hint">البيانات محفوظة على جهازك فقط.</p>
     </div>
   </header>
 
@@ -865,7 +865,7 @@
   <div class="toast" id="toast" role="status"></div>
   <input type="file" id="importFile" accept="application/json,.json" hidden>
 
-  <noscript>لازم تفعّل JavaScript حتى يشتغل تطبيق حسابات فليكر.</noscript>
+  <noscript>لازم تفعّل JavaScript حتى يشتغل تطبيق مصّاري.</noscript>
 
   <script>
   (function () {
@@ -1438,8 +1438,8 @@
       var opts = {
         publicKey: {
           challenge: crypto.getRandomValues(new Uint8Array(32)),
-          rp: { name: 'حسابات فليكر' },
-          user: { id: userId, name: 'flicker-ledger', displayName: 'حسابات فليكر' },
+          rp: { name: 'مصّاري' },
+          user: { id: userId, name: 'flicker-ledger', displayName: 'مصّاري' },
           pubKeyCredParams: [
             { type: 'public-key', alg: -7 },
             { type: 'public-key', alg: -257 }
@@ -2044,7 +2044,7 @@
 
     function exportData() {
       var payload = {
-        app: 'حسابات فليكر',
+        app: 'مصّاري',
         brand: 'Flicker Creative Studio',
         version: 1,
         exportedAt: new Date().toISOString(),

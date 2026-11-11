@@ -1,5 +1,5 @@
-/* حسابات فليكر — service worker (offline cache) */
-const CACHE = 'flicker-ledger-v2';
+/* مصّاري — service worker (offline cache) */
+const CACHE = 'flicker-ledger-v3';
 const ASSETS = [
   './',
   './index.html',
